@@ -2,6 +2,7 @@
 import { FaAirbnb, FaBars} from 'react-icons/fa';
 import { TfiWorld } from "react-icons/tfi";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import Search from './Search';
 
 const Navbar = () => {
 
@@ -40,6 +41,10 @@ const Navbar = () => {
  </div>     
 
     </section>
+    <div className='pt-6'>
+    <Search/>
+
+    </div>
   </nav>
 
   );
