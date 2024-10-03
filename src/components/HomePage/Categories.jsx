@@ -1,5 +1,5 @@
-'use client'
-import React, { useState } from 'react';
+"use client"
+import React, { useState, useRef } from 'react';
 import { LuKeyRound, LuTicket, LuTrees } from "react-icons/lu";
 import { BsUmbrella } from "react-icons/bs";
 import { IoBedOutline, IoGolfOutline } from 'react-icons/io5';
@@ -7,65 +7,92 @@ import { PiBuildingOfficeLight, PiParkLight, PiSailboatThin } from "react-icons/
 import { GiGrandPiano, GiIsland, GiTheaterCurtains } from "react-icons/gi";
 import { TbUfo } from "react-icons/tb";
 import { VscCoffee, VscSettings } from "react-icons/vsc";
-import { IoIosArrowDropleft,IoIosArrowDropright  } from "react-icons/io";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import "./categories.css"
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+
+
 
 
 const Categories = () => {
-    const [showItems, setShowItems] = useState(8);
+    const [scrollPosition, setScrollPosition] = useState(0); // Track current scroll position
+    const scrollRef = useRef(null); // Ref for scrollable container
+
+    // Function to handle right scroll
+    const handleScrollRight = () => {
+        if (scrollRef.current) {
+            const newPosition = scrollRef.current.scrollLeft + 300; // Scroll by 300px (can adjust)
+            scrollRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
+            setScrollPosition(newPosition);
+        }
+    };
+
+    // Function to handle left scroll
+    const handleScrollLeft = () => {
+        if (scrollRef.current) {
+            const newPosition = scrollRef.current.scrollLeft - 300;
+            scrollRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
+            setScrollPosition(newPosition);
+        }
+    };
+
+
+    
+
     return (
-        <div className=' mt-5  '>
+        <div className='my-5 mt-56'>
             <hr />
-            <div className='flex justify-between '>
+
+        <div>
+            
+        </div>
+
+            <div className='relative flex justify-between items-center container mx-auto  gap-1 my-3'>
                 
-            {/* Category list */}
-          <div className='flex justify-between items-center mt-4 flex-1'>
-          {
-                    showItems>=9 ?    <IoIosArrowDropleft className='text-6xl cursor-pointer  rounded-full' onClick={()=>setShowItems(showItems-1)} /> : <div className=''> </div>
-                    
-                }
 
-            {
-                catagories.slice(showItems-8,showItems).map(cat=>
-                    <div key={cat.name} className=' flex flex-col items-center '>
-                    {cat.icon}
-                    <p>{cat?.name}</p>
-                    </div>
-                )
-            }
+<SlArrowLeft className={`text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full ${scrollPosition === 0 ? 'hidden' : ''}`} // Hide if at start
+                    onClick={handleScrollLeft} />
 
-                {
-                    showItems<=9 ?   <IoIosArrowDropright   className='text-6xl cursor-pointer' onClick={()=>setShowItems(showItems+1)}   /> : <div className=''></div>
-                    
-                }
+                {/* Categories List */}
+                <div ref={scrollRef} className='flex overflow-x-auto no-scrollbar gap-4 w-full mx-2 no-scrollbar'>
+                    {categories.map((cat) => (
+                        <div key={cat.name} className='flex flex-col items-center min-w-[100px]'>
+                            {cat.icon}
+                            <p className='text-sm'>{cat.name}</p>
+                        </div>
+                    ))}
+                </div>
 
-          </div>
+                {/* Scroll Right Button */}
 
 
-            {/* Category Filter  */}
-            <div className='flex gap-3 mx-4'>
+<SlArrowRight   className='text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full'
+                    onClick={handleScrollRight}/>
 
-         
-        <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
-        <VscSettings />
-            Filter
-        </div> 
-        
-        <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
-            Display total before taxes
-            <VscSettings />
-        </div> 
-        
-        
-          </div>
+            {/* Category Filter Section */}
+            <div className='flex gap-3 '>
+                <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
+                    <VscSettings />
+                    Filter
+                </div>
+                <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
+                    Display total before taxes
+                    <VscSettings />
+                </div>
             </div>
+
+
+            </div>
+
+            <hr />
         </div>
     );
 };
 
 export default Categories;
 
-
-const catagories=[
+// Categories Data
+const categories=[
     {
         icon:<LuTicket  className='text-3xl '/>,
         name:"icons"
@@ -115,7 +142,7 @@ const catagories=[
         name:"Boats"
     },
     {
-        icon:< LuKeyRound rand   className='text-3xl '/> ,
+        icon:< LuKeyRound   className='text-3xl '/> ,
         name:"New"
     },
 ]

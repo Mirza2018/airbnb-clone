@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
         // Navbar items Section
-  <nav className="mx-10 p-4 ">
+  <nav className="mx-10  fixed z-50 w-full bg-white top-0 pb-10 px-20 pt-5">
     <section className="flex justify-between ">
       {/* logo */}
         <div className=" md:block hidden">

@@ -5,11 +5,15 @@ import Image from 'next/image';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { LuDot } from 'react-icons/lu';
 
-const Item = () => {
+const Item = ({house}) => {
+    const {name,country,dateStart,dateEnd,price,images,cat}=house
+
+    
+
+
     let [imgURL,setImgURL]=useState(0)
     let [slide,setSlide]=useState(false)
 
-    console.log(imgURL);
     const showSlideing=()=>{
         setSlide(true)
     }
@@ -52,10 +56,10 @@ const Item = () => {
                 />
             </div>
             <div className=''>
-                <h3 className='text-lg font-semibold'>Name, Country</h3>
-                <p className='text-lg text-gray-500'>Place Name</p>
-                <p className='text-lg text-gray-500'>Date: 2-7</p>
-                <p><span className='text-lg font-semibold'>$200</span> per night</p>
+                <h3 className='text-lg font-semibold'>{name}, {country}</h3>
+                <p className='text-lg text-gray-500'>{cat}</p>
+                <p className='text-lg text-gray-500'>Date: {dateStart} {dateEnd}</p>
+                <p><span className='text-lg font-semibold'>${price}</span> per night</p>
             </div>
         </div>
     );
@@ -65,4 +69,4 @@ export default Item;
 
 
 
-const images=["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN1MxQpdnaeXnxFs5jCVLMh1XOkC5ZHuksBw&s","https://www.visitdubai.com/-/media/gathercontent/article/t/top-rides-at-img-worlds-of-adventure/media/top-rides-at-img-worlds-of-adventure-predator-5.jpg?rev=8a807a703ed5476ca20c6563a833230d&cx=0.56&cy=0.4&cw=397&ch=397","https://i.ytimg.com/vi/OKZFHo5p4VA/maxresdefault.jpg","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThCKUI5_pjELdfznQ_t0RBxSYNi1CeF3nxsg&s"]
+// const images=["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN1MxQpdnaeXnxFs5jCVLMh1XOkC5ZHuksBw&s","https://www.visitdubai.com/-/media/gathercontent/article/t/top-rides-at-img-worlds-of-adventure/media/top-rides-at-img-worlds-of-adventure-predator-5.jpg?rev=8a807a703ed5476ca20c6563a833230d&cx=0.56&cy=0.4&cw=397&ch=397","https://i.ytimg.com/vi/OKZFHo5p4VA/maxresdefault.jpg","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThCKUI5_pjELdfznQ_t0RBxSYNi1CeF3nxsg&s"]
