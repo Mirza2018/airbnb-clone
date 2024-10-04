@@ -21,7 +21,7 @@ const ApiProvider=({children})=>{
             const fetchHouseData= async ()=>{
                 try {
                     setLoading(true)
-                    const res= await fetch("http://localhost:5000/house")
+                    const res= await fetch(`${process.env.NEXT_PUBLIC_Base_URL}house`)
                     if(!res.ok){
                         throw new Error("Network response was not ok")
                     }

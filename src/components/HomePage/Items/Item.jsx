@@ -4,6 +4,7 @@ import img1 from '../../../assets/img1.webp';
 import Image from 'next/image';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { LuDot } from 'react-icons/lu';
+import { IoIosHeart } from "react-icons/io";
 
 const Item = ({house}) => {
     const {name,country,dateStart,dateEnd,price,images,cat}=house
@@ -13,6 +14,7 @@ const Item = ({house}) => {
 
     let [imgURL,setImgURL]=useState(0)
     let [slide,setSlide]=useState(false)
+    let [fav,setFav]=useState(false)
 
     const showSlideing=()=>{
         setSlide(true)
@@ -43,16 +45,16 @@ const Item = ({house}) => {
                 </>
 
                 }
-             
-               
-
+                <div className="text-black opacity-70">
+             <IoIosHeart onClick={()=>{setFav(!fav)}} className={`${fav && "text-red-500 opacity-100 scale-125"} text-2xl absolute top-8 right-2 transform -translate-y-1/2 cursor-pointer hover:text-pink-600 hover:scale-125 translate duration-100 `} />
+           </div>
                 <Image
                     alt='img'
-                    className='w-[350px] rounded-xl object-cover aspect-square'
+                    className='w-[450px] rounded-xl object-cover aspect-square'
                     src={images[imgURL]}
-                    width={1000}
-                    height={1000}
-                    layout="responsive"
+                    width={500}
+                    height={500}
+                    priority 
                 />
             </div>
             <div className=''>

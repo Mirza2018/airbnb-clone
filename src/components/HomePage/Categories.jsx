@@ -7,10 +7,10 @@ import { PiBuildingOfficeLight, PiParkLight, PiSailboatThin } from "react-icons/
 import { GiGrandPiano, GiIsland, GiTheaterCurtains } from "react-icons/gi";
 import { TbUfo } from "react-icons/tb";
 import { VscCoffee, VscSettings } from "react-icons/vsc";
-import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import "./categories.css"
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { ApiContext } from '@/Context/ApiProvider';
+import Filter from './Filter';
 
 
 
@@ -19,6 +19,8 @@ const Categories = () => {
     const {setHouses}=useContext(ApiContext)
     const [scrollPosition, setScrollPosition] = useState(0); // Track current scroll position
     const scrollRef = useRef(null); // Ref for scrollable container
+    const [showFilter,setShowFilter]=useState(false)
+
 
     // Function to handle right scroll
     const handleScrollRight = () => {
@@ -42,7 +44,7 @@ const Categories = () => {
     const handeleFilter=async (cat)=>{
  console.log(cat);
         try {
-            const res=await fetch("http://localhost:5000/house",{
+            const res=await fetch(`${process.env.NEXT_PUBLIC_Base_URL}house`,{
             method:"GET",
             headers:{
                 cat:cat
@@ -53,7 +55,7 @@ const Categories = () => {
                 throw new Error("Network response was not ok")
             }
             const data=await res.json()
-            console.log("Data get",data);
+            // console.log("Data get",data);
             setHouses(data)
 
         } catch (error) {
@@ -61,10 +63,15 @@ const Categories = () => {
         } 
     }
 
+
+    const newPage=()=>{
+
+    }
+
     
 
     return (
-        <div className='my-5 mt-56'>
+        <div className='my-5 mt-56 '>
             <hr />
 
         <div>
@@ -74,8 +81,8 @@ const Categories = () => {
             <div className='relative flex justify-between items-center container mx-auto  gap-1 my-3'>
                 
 
-<SlArrowLeft className={`text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full ${scrollPosition === 0 ? 'hidden' : ''}`} // Hide if at start
-                    onClick={handleScrollLeft} />
+            <SlArrowLeft className={`text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full ${scrollPosition === 0 ? 'hidden' : ''}`} // Hide if at start
+                                onClick={handleScrollLeft} />
 
                 {/* Categories List */}
                 <div ref={scrollRef} className='flex overflow-x-auto no-scrollbar gap-4 w-full mx-2 no-scrollbar'>
@@ -90,18 +97,25 @@ const Categories = () => {
                 {/* Scroll Right Button */}
 
 
-<SlArrowRight   className='text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full'
+            <SlArrowRight   className='text-3xl cursor-pointer ring-1 ring-gray-400 p-2 rounded-full'
                     onClick={handleScrollRight}/>
 
             {/* Category Filter Section */}
-            <div className='flex gap-3 '>
-                <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
+            <div className='flex gap-3 ms-2 '>
+                <div onClick={()=>setShowFilter(!showFilter)} className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 py-2 cursor-pointer md:my-2 my-5 hover:ring-black'>
                     <VscSettings />
                     Filter
                 </div>
-                <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 my-2'>
+                <div className='flex items-center gap-1 ring-1 ring-gray-300 rounded-xl px-2 py-2 md:my-2'>
                     Display total before taxes
-                    <VscSettings />
+                  
+                    <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" value="" />
+                    <div
+                        class="group peer bg-gray-400 rounded-full duration-300 w-16 h-8 ring-2 ring-white after:duration-300 after:bg-white peer-checked:after:bg-white peer-checked:ring-white after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"
+                    ></div>
+                    </label>
+
                 </div>
             </div>
 
@@ -109,6 +123,14 @@ const Categories = () => {
             </div>
 
             <hr />
+
+             {
+                 showFilter &&    <div className=""  >
+                                    <Filter setShowFilter={setShowFilter}/>
+                                    </div>     
+             }
+
+           
         </div>
     );
 };
@@ -119,15 +141,15 @@ export default Categories;
 const categories=[
     {
         icon:<LuTicket  className='text-3xl '/>,
-        name:"icons"
+        name:"Iconic"
     },
     {
         icon:<BsUmbrella  className='text-3xl '/> ,
-        name:"gooms"
+        name:"Gooms"
     },
     {
         icon:<IoBedOutline className='text-3xl '/> ,
-        name:"rooms"
+        name:"Rooms"
     },
     {
         icon:<LuTrees className='text-3xl '/> ,

@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className=" md:block hidden">
       <div className="text-4xl flex gap-1 justify-center items-center text-rose-600 hover:text-black ">
               <FaAirbnb />
-      <h1 className="font-semibold">airbnb</h1>
+      <h1 className="font-semibold xl:block hidden">airbnb</h1>
       </div>
         </div>
   
@@ -24,8 +24,8 @@ const Navbar = () => {
 {/* Middle component */}
 <div className="mx-auto">
       <div className="text-xl gap-7 flex ">
-        <button>stays</button>
-        <button>Experiences</button>
+        <button className="font-semibold">stays</button>
+        <button className="text-gray-500 text-base">Experiences</button>
       </div>
 </div>
 {/* Last component */}
