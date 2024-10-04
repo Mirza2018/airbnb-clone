@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import img1 from '../../../assets/img1.webp';
 import Image from 'next/image';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { LuDot } from 'react-icons/lu';
