@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useContext } from 'react';
 import { LuKeyRound, LuTicket, LuTrees } from "react-icons/lu";
 import { BsUmbrella } from "react-icons/bs";
 import { IoBedOutline, IoGolfOutline } from 'react-icons/io5';
@@ -10,11 +10,13 @@ import { VscCoffee, VscSettings } from "react-icons/vsc";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import "./categories.css"
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+import { ApiContext } from '@/Context/ApiProvider';
 
 
 
 
 const Categories = () => {
+    const {setHouses}=useContext(ApiContext)
     const [scrollPosition, setScrollPosition] = useState(0); // Track current scroll position
     const scrollRef = useRef(null); // Ref for scrollable container
 
@@ -37,6 +39,28 @@ const Categories = () => {
     };
 
 
+    const handeleFilter=async (cat)=>{
+ console.log(cat);
+        try {
+            const res=await fetch("http://localhost:5000/house",{
+            method:"GET",
+            headers:{
+                cat:cat
+            }
+            })
+
+            if(!res.ok){
+                throw new Error("Network response was not ok")
+            }
+            const data=await res.json()
+            console.log("Data get",data);
+            setHouses(data)
+
+        } catch (error) {
+            console.error("Error fetching data", error);
+        } 
+    }
+
     
 
     return (
@@ -56,7 +80,7 @@ const Categories = () => {
                 {/* Categories List */}
                 <div ref={scrollRef} className='flex overflow-x-auto no-scrollbar gap-4 w-full mx-2 no-scrollbar'>
                     {categories.map((cat) => (
-                        <div key={cat.name} className='flex flex-col items-center min-w-[100px]'>
+                        <div onClick={()=>handeleFilter(cat.name)} key={cat.name} className='flex flex-col items-center min-w-[100px] cursor-pointer'>
                             {cat.icon}
                             <p className='text-sm'>{cat.name}</p>
                         </div>
@@ -99,11 +123,11 @@ const categories=[
     },
     {
         icon:<BsUmbrella  className='text-3xl '/> ,
-        name:"Betch"
+        name:"gooms"
     },
     {
         icon:<IoBedOutline className='text-3xl '/> ,
-        name:"Rooms"
+        name:"rooms"
     },
     {
         icon:<LuTrees className='text-3xl '/> ,

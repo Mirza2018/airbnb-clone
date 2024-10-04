@@ -6,7 +6,7 @@ import { ApiContext } from '@/Context/ApiProvider';
 
 const Items = () => {
     const {houses,loading}=useContext(ApiContext)
-    console.log(houses);
+    // console.log(houses);
     
     return (
         <div className="container mx-auto">

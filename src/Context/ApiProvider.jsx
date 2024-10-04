@@ -42,7 +42,7 @@ const ApiProvider=({children})=>{
         
 
 const values={
-    houses,loading
+    houses,loading,setHouses
 }
 
 
